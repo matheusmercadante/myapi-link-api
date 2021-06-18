@@ -27,7 +27,7 @@ Integração:
 
 ## :zap: Rodando o projeto
 
-### Docker
+### Via Docker
 
 É preciso ter o [Docker](https://www.docker.com/) instaldo em sua máquina. Feito a instalação, rodar os seguintes comandos:
 
@@ -37,11 +37,18 @@ $ npm run docker:build
 $ npm run docker:up # ou npm run docker:logging
 ```
 
-### Api
+### Via Script
 
-### Pipedrive Service
+```bash
+#Entra na pasta api, instala dependências e inicia servidor
+$ cd api && npm install && npm run start:dev
 
-### Bling Service
+#Entra na pasta pipedrive, instala dependências e inicia servidor
+$ cd pipedrive && npm install && npm run start:dev
+
+# Entra na pasta bling, instala dependências e inicia servidor
+cd bling && npm install && npm run start:dev
+```
 
 ## :notebook: Endpoints
 
