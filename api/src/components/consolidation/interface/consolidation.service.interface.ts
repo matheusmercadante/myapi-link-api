@@ -4,5 +4,7 @@ import { Consolidation } from '../entity/consolidation.entity';
 export interface ConsolidationServiceInterface {
   findAll(): Promise<Consolidation[]>;
   findReport(): Promise<Consolidation[]>;
-  create(data: CreateConsolidationPipedriveBlingDto): Promise<Consolidation>;
+  create(
+    data: CreateConsolidationPipedriveBlingDto,
+  ): Promise<Consolidation[] | Consolidation>;
 }

@@ -135,16 +135,19 @@ export class AppService {
 
   // Promise<AxiosResponse<any>>
   async create(payload: any) {
-    const { token, data } = payload;
+    const { token, data: dealsData } = payload;
 
-    if (data.length === 0) {
+    if (dealsData.length === 0) {
       return;
     }
 
     try {
-      for (const key in data) {
-        if (Object.prototype.hasOwnProperty.call(data, key)) {
-          const xml = encodeURI(this.convertJsonToXml(data));
+      let returnedData = [];
+
+      for (const key in dealsData) {
+        if (Object.prototype.hasOwnProperty.call(dealsData, key)) {
+          const order = dealsData[key];
+          const xml = encodeURI(this.convertJsonToXml(order));
 
           const orderCreated = await this.httpService
             .post(`https://bling.com.br/Api/v2/pedido/json`, '', {
@@ -153,12 +156,17 @@ export class AppService {
             })
             .toPromise();
 
-          return {
+          const returned = {
+            dealId: order.id,
             status: orderCreated.status,
             data: orderCreated.data.retorno,
           };
+
+          returnedData.push(returned);
         }
       }
+
+      return { data: returnedData};
     } catch (error) {
       return error;
     }

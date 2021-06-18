@@ -55,7 +55,7 @@ export class ConsolidationService implements ConsolidationServiceInterface {
 
   public async create(
     data: CreateConsolidationPipedriveBlingDto,
-  ): Promise<Consolidation> {
+  ): Promise<Consolidation[] | Consolidation> {
     const { pipedrive_api_token, bling_api_token } = data;
 
     try {
@@ -81,18 +81,34 @@ export class ConsolidationService implements ConsolidationServiceInterface {
         };
       });
 
-      const { status: createdOrderStatus, data: createdOrder } =
-        await this.orderService.create(bling_api_token, fillWonDeals);
+      const { data: createdOrders } = await this.orderService.create(
+        bling_api_token,
+        fillWonDeals,
+      );
 
-      if (createdOrderStatus !== 201) {
-        const { erro: error } = createdOrder.erros[0];
+      let returnData = [];
+      for (const key in createdOrders) {
+        const order = createdOrders[key];
 
-        new Error(error.msg);
-      } else {
-        const orderId = createdOrder.pedidos[0].pedido.numero;
+        if (order.status !== 201) {
+          const { erro: error } = order.data.erros[0];
 
-        return await this.fillOrdersToConsolidation(bling_api_token, orderId);
+          const message = { deal_id: order.dealId, error };
+
+          returnData.push(message);
+        } else {
+          const orderId = order.data.pedidos[0].pedido.numero;
+
+          const createdMongo = await this.fillOrdersToConsolidation(
+            bling_api_token,
+            orderId,
+          );
+
+          returnData.push(createdMongo);
+        }
       }
+
+      return returnData;
     } catch (error) {
       throw new Error(error);
     }
