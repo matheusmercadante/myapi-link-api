@@ -1,0 +1,120 @@
+version: "3.7"
+services:
+  myapi:
+    depends_on:
+      - db
+      - bling
+      - pipedrive
+    build:
+      context: ./api/
+      dockerfile: Containerfile
+      target: development
+    command: npm run start:dev
+    image: haungi/myapi
+    container_name: myapi
+    restart: always
+    tty: true
+    ports:
+      - "3333:3333"
+    working_dir: /opt/app-root
+    environment:
+      SERVER_PORT: 3333
+
+      DATABASE_HOST: myapi-mongodb
+      DATABASE_PORT: 27017
+      DATABASE_NAME: myapi_db
+
+      PIPEDRIVE_HOST: myapi-pipedrive
+      PIPEDRIVE_PORT: ${PIPEDRIVE_PORT}
+      
+      BLING_HOST: myapi-bling
+      BLING_PORT: ${BLING_PORT}
+    volumes:
+      - ./api/:/opt/app-root
+      - /opt/app-root/node_modules
+    networks:
+      - myapi-network
+
+  db:
+    image: mongo
+    container_name: myapi-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: ${DATABASE_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - db_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - myapi-network
+
+  mongoexpress:
+    image: mongo-express
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: myapi-mongodb
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DATABASE_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DATABASE_PASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+    volumes:
+      - db_data:/data/db
+    depends_on:
+      - db
+    networks:
+      - myapi-network
+    ports:
+      - 8081:8081
+
+  bling:
+    build:
+      context: ./bling/
+      dockerfile: Containerfile
+      target: development
+    command: npm run start:dev
+    image: haungi/myapi-bling
+    container_name: myapi-bling
+    restart: always
+    tty: true
+    ports:
+      - "4444:4444/tcp"
+    working_dir: /opt/app-root
+    environment:
+      SERVER_HOST: myapi-bling
+      SERVER_PORT: 4444
+    volumes:
+      - ./bling/:/opt/app-root
+      - /opt/app-root/node_modules
+    networks:
+      - myapi-network
+
+  pipedrive:
+    build:
+      context: ./pipedrive/
+      dockerfile: Containerfile
+      target: development
+    command: npm run start:dev
+    image: haungi/myapi-pipedrive
+    container_name: myapi-pipedrive
+    restart: always
+    tty: true
+    ports:
+      - "5555:5555/tcp"
+    working_dir: /opt/app-root
+    environment:
+      SERVER_HOST: myapi-pipedrive
+    volumes:
+      - ./pipedrive/:/opt/app-root
+      - /opt/app-root/node_modules
+    networks:
+      - myapi-network
+
+volumes:
+  db_data: {}
+
+networks:
+  myapi-network:
+    driver: bridge

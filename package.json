@@ -1,0 +1,17 @@
+{
+  "name": "myapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:up": "",
+    "docker:up": "docker-compose up -d",
+    "docker:logging": "docker-compose up",
+    "docker:build": "docker-compose build",
+    "docker:down": "docker-compose down",
+    "docker:uninstall": "docker-compose down --rmi all"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

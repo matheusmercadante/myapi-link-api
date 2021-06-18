@@ -1,0 +1,25 @@
+FROM node:14.16.0-alpine3.11 As development
+
+WORKDIR /opt/app-root
+
+COPY package*.json ./
+
+RUN npm install --only=development
+
+COPY . .
+
+RUN npm run build
+
+FROM node:14.16.0-alpine3.11 as production
+
+WORKDIR /opt/app-root
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+COPY . .
+
+COPY --from=development /opt/app-root/dist ./dist
+
+CMD ["node", "dist/main"]
