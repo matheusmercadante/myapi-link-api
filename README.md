@@ -118,6 +118,12 @@ cd bling && npm install && npm run start:dev
       Query Params:
         - api_token: 88c5683001c1733432b2aa6c3142de2dc36f28d4 (pipedrive-token)
     ```
+    
+### Ordem de execução
+
+1. `POST /integrations/pipedrive-bling/deals-orders?{pipedrive_api_token}&{bling_api_token}`
+2. `GET /integrations/pipedrive-bling/deals-orders?{api_token}`
+3. `GET /integrations/pipedrive-bling/deals-orders/report?{api_token}`
 
 ### Insomnia
 
