@@ -8,13 +8,6 @@
 
 <h4 align="center">Projeto feito com TypeScript, Docker, Nestjs ⚡️🔥</h4>
 
-<p align="center">
-  <a href="#themes">Themes</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#need-help">Need help?</a> •
-  <a href="#license">License</a>
-</p>
-
 ## 🚀 Sobre
 
 Integração:
