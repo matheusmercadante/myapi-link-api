@@ -25,9 +25,12 @@ export class ConsolidationController {
 
   @Post('/pipedrive-bling/deals-orders')
   async createPipedriveBlingDealsToOrders(
-    @Body()
-    data: CreateConsolidationPipedriveBlingDto,
+    @Query()
+    query: CreateConsolidationPipedriveBlingDto,
   ): Promise<Consolidation> {
+    const { pipedrive_api_token, bling_api_token } = query;
+    const data = { pipedrive_api_token, bling_api_token }
+
     return await this.consolidationService.create(data);
   }
 }
