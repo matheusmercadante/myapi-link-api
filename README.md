@@ -49,7 +49,7 @@ cd bling && npm install && npm run start:dev
 
 ## :notebook: Endpoints
 
-Antes de teste, saiba:
+### Antes de testar, saiba:
 
 *pipedrive-token: 88c5683001c1733432b2aa6c3142de2dc36f28d4*
 </br>
@@ -78,15 +78,46 @@ Antes de teste, saiba:
 
 ### Api
 
-* `GET /integrations/pipedrive-bling/deals-orders?{api_token}` retorna os deals inseridos no Bling cadastrados no Mongo 
+* Retorna os deals inseridos no Bling cadastrados no Mongo:
+    ```bash
+      GET /integrations/pipedrive-bling/deals-orders?{api_token}
 
-* `GET /integrations/pipedrive-bling/deals-orders/report?{api_token}` retorna os deals inseridos no Bling por dia e valor total cadastrados no Mongo de forma consolidada
+      Query Params:
+        - api_token: 3b0fc4b0021aaa22e0b204931faacf46a417b2a044f3d1f21fdaee2e196471bd43056ccb (bling-token)
+    ```
 
-* `POST /integrations/pipedrive-bling/deals-orders?{pipedrive_api_token}&{bling_api_token}` cadastra um order no bling a partir de um won deal do pipedrive (irá puxar todos os won deals e cadastrar um por um)
+* Retorna os deals inseridos no Bling por dia e valor total cadastrados no Mongo de forma consolidada:
+    ```bash
+     GET /integrations/pipedrive-bling/deals-orders/report?{api_token}
 
-* `GET /bling/orders?{api_token}` retorna todos os orders cadastrados no bling
+     Query Params:
+        - api_token: 3b0fc4b0021aaa22e0b204931faacf46a417b2a044f3d1f21fdaee2e196471bd43056ccb (bling-token)
+    ```
+    
+* Cadastra um order no bling a partir de um won deal do pipedrive (irá puxar todos os won deals e cadastrar um por um):
+    ```bash
+     POST /integrations/pipedrive-bling/deals-orders?{pipedrive_api_token}&{bling_api_token}
 
-* `GET /pipedrive/deals?{api_token}` retorna todos os deals cadastrados no pipedrive
+     Query Params:
+        - pipedrive_api_token: 88c5683001c1733432b2aa6c3142de2dc36f28d4 (pipedrive-token)
+        - bling_api_token: 3b0fc4b0021aaa22e0b204931faacf46a417b2a044f3d1f21fdaee2e196471bd43056ccb (bling-token)
+    ```
+
+* Retorna todos os orders cadastrados no Bling
+    ```bash
+      GET /bling/orders?{api_token}
+
+      Query Params:
+        - api_token: 3b0fc4b0021aaa22e0b204931faacf46a417b2a044f3d1f21fdaee2e196471bd43056ccb (bling-token)
+    ```
+
+* Retorna todos os deals cadastrados no Pipedrive
+    ```bash
+      GET /pipedrive/deals?{api_token}
+      
+      Query Params:
+        - api_token: 88c5683001c1733432b2aa6c3142de2dc36f28d4 (pipedrive-token)
+    ```
 
 ### Insomnia
 
