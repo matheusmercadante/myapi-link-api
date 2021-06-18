@@ -47,6 +47,10 @@ cd bling && npm install && npm run start:dev
 
 Antes de teste, saiba:
 
+*pipedrive-token: 88c5683001c1733432b2aa6c3142de2dc36f28d4*
+</br>
+*bling-token: 3b0fc4b0021aaa22e0b204931faacf46a417b2a044f3d1f21fdaee2e196471bd43056ccb*
+
 1. É importante ressaltar que é necessário ter won deals no pipedrive. Por padrão, 5 won deals está cadastrado.
 
 2. Também é importante saber que caso um won deal já esteja cadastrado no bling como order, ele não irá salvar no mongodb, não retornando nenhum dado na terceira rota abaixo:  </br>
@@ -55,12 +59,13 @@ Antes de teste, saiba:
 3. Para cadastrar um novo order no bling, adicione um novo won deal no pipedrive, com a seguinte rota: </br>
   `POST https://qrhub.pipedrive.com/api/v1/deals?{api_token}` </br>
   `BODY {
-      'title': 'Deal Exemplo',
-      'org_id': 0,
-      'value': 1000,
-      'user_id': 12384292,
-      'currency': 'BRL',
-      'expected_close_date': '2021-06-18',
+      "title": "Deal Exemplo",
+      "org_id": 0,
+      "status": "won",
+      "value": 1000,
+      "user_id": 12384292,
+      "currency": "BRL",
+      "expected_close_date": "2021-06-18"
     }`
 
 ### Api
