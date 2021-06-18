@@ -47,3 +47,4 @@ $ npm run docker:up # ou npm run docker:logging
 
 Você pode executar online ou fazer o download dos endpoints e executar diretamente no Insomnia:
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=MyApi%20Link%20API&uri=https%3A%2F%2Fgithub.com%2Fmatheusmercadante%2Fmyapi-link-api%2Fblob%2Fmain%2F.github%2Finsomnia.json)
