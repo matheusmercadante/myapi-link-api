@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://storage.googleapis.com/golden-wind/github/gatsby-themes-logo.svg" alt="LinkApi" width="260">
+  <img src="https://avatars.githubusercontent.com/u/38729977?s=200&v=4" alt="LinkApi" width="230">
   <br>
   MyApi - Link Api
   <br>
